@@ -27,11 +27,6 @@ body {
   margin: 0;
 }
 
-body {
-  /* display: grid;
-  grid-template-rows: 1fr auto; */
-}
-
 .wrap {
   min-height: 100%;
   /* margin-bottom: -50px; */
@@ -211,10 +206,6 @@ option:checked {
   font-family: contextFont;
   font-size: 22px;
   padding-right: 50px;
-}
-
-.edit-btns {
-  /* margin-left: 50px; */
 }
 
 .edit-btns :hover {
