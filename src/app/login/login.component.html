@@ -1,1 +1,29 @@
-<p>login works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <p class="title">台南景點推薦系統</p>
+      <div class="card">
+        <a class="login">WELCOME</a>
+        <!-- <form #PostForm="ngForm" (submit)="onLogin(PostForm.value)"> -->
+        <div class="inputBox">
+          <input type="text" required [(ngModel)]="userid" />
+          <span class="user">帳號</span>
+        </div>
+        <div class="inputBox">
+          <input type="password" required [(ngModel)]="userpwd" />
+          <span>密碼</span>
+        </div>
+        <button class="enter" (click)="onLogin()">登入</button>
+        <!-- </form> -->
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+</html>

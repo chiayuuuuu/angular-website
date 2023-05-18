@@ -1,1 +1,421 @@
-<p>background-system works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <div>
+        <nav class="nav-bar">
+          <ul>
+            <li>
+              <a href="/admin"><i class="fas fa-home"></i>首頁</a>
+            </li>
+            <li>
+              <a href="/login"
+                ><i class="fa-solid fa-right-from-bracket"></i>登出</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="wrap">
+      <div class="background">
+        <div class="title-bar">
+          <p class="title">
+            臺南景點推薦後台系統<i
+              class="fa-solid fa-screwdriver-wrench"
+              style="color: #022151"
+            ></i>
+          </p>
+        </div>
+        <!-- <button
+          type="submit"
+          class="btn btn-outline-dark"
+          (click)="getAllAttraction()"
+        >
+          顯示所有景點
+        </button> -->
+
+        <div class="container">
+          <div class="select">
+            <label for="district">區域： </label>
+            <select
+              class="form-select w-25"
+              name="district"
+              id="district"
+              [(ngModel)]="selectedDistrict"
+            >
+              <option value="">---請選擇區域---</option>
+              <option
+                *ngFor="let district of districtList"
+                [value]="district.district"
+              >
+                {{ district.district }}
+              </option>
+            </select>
+            <div class="btn-list">
+              <button
+                type="submit"
+                class="btn btn-outline-secondary"
+                (click)="getAllAttraction()"
+              >
+                <i class="fa-solid fa-magnifying-glass"></i>
+                查詢
+              </button>
+              <button
+                type="submit"
+                class="btn btn-outline-secondary"
+                (click)="showAddInfo()"
+              >
+                <i class="fa-solid fa-location-dot"></i>
+                新增景點
+              </button>
+              <button
+                type="submit"
+                class="btn btn-outline-secondary"
+                (click)="getAllAPIInfo()"
+              >
+                顯示所有API
+              </button>
+              <button
+                type="submit"
+                class="btn btn-outline-secondary"
+                (click)="showAddAPIInfo()"
+              >
+                新增景點API
+              </button>
+            </div>
+          </div>
+          <ngx-spinner
+            bdColor="rgba(0,0,0,0.5)"
+            size="medium"
+            color="#ffffbb"
+            type="pacman"
+            [fullScreen]="true"
+            ><p style="color: white">Loading...</p>
+          </ngx-spinner>
+          <!-- 新增API -->
+          <div class="add-api" *ngIf="isClickAddAPI">
+            <form #PostForm="ngForm" (submit)="addPublicAPI(PostForm.value)">
+              <label for="county">縣市:</label>
+              <input
+                type="text"
+                name="county"
+                required
+                ngModel
+                class="form-control"
+              />
+              <label for="url">景點API:</label>
+              <input
+                type="text"
+                name="url"
+                required
+                ngModel
+                class="form-control"
+              />
+              <div class="sure-cancel">
+                <button type="submit" class="btn btn-outline-danger">
+                  確定新增
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  (click)="isClickAddAPI = false"
+                >
+                  取消
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- 新增景點 -->
+          <div class="div-add" *ngIf="isClickAdd">
+            <form #PostForm="ngForm" (submit)="addAttraction(PostForm.value)">
+              <label for="county">縣市:</label>
+              <input
+                type="text"
+                name="county"
+                required
+                ngModel
+                class="form-control"
+                [(ngModel)]="selectedCounty"
+              />
+              <label for="district">區域:</label>
+              <input
+                type="text"
+                name="district"
+                required
+                ngModel
+                class="form-control"
+                [(ngModel)]="selectedDistrict"
+              />
+              <label for="name">景點名稱:</label>
+              <input
+                type="text"
+                name="name"
+                required
+                ngModel
+                class="form-control"
+              />
+              <label for="county">地址:</label>
+              <input
+                type="text"
+                name="address"
+                required
+                ngModel
+                class="form-control"
+              />
+              <label for="openTime">開放時間:</label>
+              <input
+                type="text"
+                name="openTime"
+                required
+                ngModel
+                class="form-control"
+              />
+              <label for="telephone">連絡電話:</label>
+              <input
+                type="text"
+                name="telephone"
+                required
+                ngModel
+                class="form-control"
+              />
+              <label for="info">景點介紹:</label>
+              <textarea
+                type="text"
+                name="info"
+                required
+                ngModel
+                class="form-control"
+              ></textarea>
+              <label for="description">景點描述:</label>
+              <textarea
+                type="text"
+                name="description"
+                required
+                ngModel
+                class="form-control"
+              ></textarea>
+              <div class="sure-cancel">
+                <button type="submit" class="btn btn-outline-danger">
+                  確定新增
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  (click)="isClickAdd = false"
+                >
+                  取消
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- 修改API -->
+          <div class="div-modify" *ngIf="isClickModifyApi">
+            <form
+              #ModifyAPIForm="ngForm"
+              (submit)="modifyAPI(ModifyAPIForm.value)"
+            >
+              <label for="id">ID:</label>
+              <input
+                type="number"
+                name="id"
+                required
+                [(ngModel)]="selectedApi.id"
+                class="form-control"
+              />
+              <label for="county">縣市:</label>
+              <input
+                type="text"
+                name="county"
+                required
+                [(ngModel)]="selectedApi.county"
+                class="form-control"
+              />
+              <label for="url">API網址:</label>
+              <input
+                type="text"
+                name="url"
+                required
+                [(ngModel)]="selectedApi.url"
+                class="form-control"
+              />
+              <div class="sure-cancel">
+                <button type="submit" class="btn btn-outline-danger">
+                  確定修改
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  (click)="isClickModifyApi = false"
+                >
+                  取消
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- 修改景點 -->
+          <div class="div-modify" *ngIf="isClickModify">
+            <form
+              #ModifyForm="ngForm"
+              (submit)="modifyAttraction(ModifyForm.value)"
+            >
+              <label for="id">景點ID:</label>
+              <input
+                type="number"
+                name="id"
+                required
+                [(ngModel)]="selectedAttraction.id"
+                class="form-control"
+              />
+              <label for="county">縣市:</label>
+              <input
+                type="text"
+                name="county"
+                required
+                [(ngModel)]="selectedAttraction.county"
+                class="form-control"
+              />
+              <label for="district">區域:</label>
+              <input
+                type="text"
+                name="district"
+                required
+                [(ngModel)]="selectedAttraction.district"
+                class="form-control"
+              />
+              <label for="name">景點名稱:</label>
+              <input
+                type="text"
+                name="name"
+                required
+                [(ngModel)]="selectedAttraction.name"
+                class="form-control"
+              />
+              <label for="county">地址:</label>
+              <input
+                type="text"
+                name="address"
+                required
+                [(ngModel)]="selectedAttraction.address"
+                class="form-control"
+              />
+              <label for="openTime">開放時間:</label>
+              <textarea
+                id="openTime"
+                type="text"
+                name="openTime"
+                required
+                [(ngModel)]="selectedAttraction.openTime"
+                class="form-control"
+              ></textarea>
+              <label for="telephone">連絡電話:</label>
+              <input
+                type="text"
+                name="telephone"
+                required
+                [(ngModel)]="selectedAttraction.telephone"
+                class="form-control"
+              />
+              <label for="info">景點介紹:</label>
+              <textarea
+                id="info"
+                type="text"
+                name="info"
+                required
+                [(ngModel)]="selectedAttraction.info"
+                class="form-control"
+              ></textarea>
+              <label for="description">景點描述:</label>
+              <textarea
+                id="description"
+                type="text"
+                name="description"
+                required
+                [(ngModel)]="selectedAttraction.description"
+                class="form-control"
+              ></textarea>
+              <div class="sure-cancel">
+                <button type="submit" class="btn btn-outline-danger">
+                  確定修改
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  (click)="isClickModify = false"
+                >
+                  取消
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="attractions">
+            <!-- 顯示所有API -->
+            <div class="show-api" *ngIf="isClickShowAllApi">
+              <ul>
+                <li *ngFor="let api of apiList">
+                  <div class="div-api">
+                    <p>縣市: {{ api.county }}</p>
+                    <div class="edit-btns">
+                      <!-- 編輯按鈕 -->
+                      <a (click)="showModifyAPIInfo(api)"
+                        ><i class="fa-solid fa-pen-to-square"></i
+                      ></a>
+                      <!-- 刪除按鈕 -->
+                      <a (click)="removeAPI(api.id)"
+                        ><i class="fa-solid fa-trash"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <p>API網址: {{ api.url }}</p>
+                </li>
+              </ul>
+            </div>
+            <div
+              *ngIf="selectedAttractionList.length > 0 && !isClickShowAllApi"
+            >
+              <ul>
+                <li
+                  *ngFor="let attraction of selectedAttractionList"
+                  class="info-list"
+                >
+                  <!-- <div class="card" (click)="onGoShowComponent(attraction.id)"> -->
+                  <div class="row-data">
+                    <p>景點名稱: {{ attraction.name }}</p>
+                    <div class="edit-btns">
+                      <!-- 預覽按鈕 -->
+                      <a (click)="onGoShowComponent(attraction.id)"
+                        ><i class="fa-solid fa-eye"></i
+                      ></a>
+                      <!-- 編輯按鈕 -->
+                      <a (click)="showModifyInfo(attraction)"
+                        ><i class="fa-solid fa-pen-to-square"></i
+                      ></a>
+                      <!-- 刪除按鈕 -->
+                      <a (click)="removeAttraction(attraction.id)"
+                        ><i class="fa-solid fa-trash"></i
+                      ></a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer>
+        <p>本網站為練習用</p>
+      </footer>
+    </div>
+  </body>
+</html>

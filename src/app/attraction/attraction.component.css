@@ -1,0 +1,261 @@
+@font-face {
+  font-family: "topicFont";
+  src: url("src/assets/fonts/華康墨字體_(P).TTC") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "contextFont";
+  src: url("src/assets/fonts/華康POP1體W7_W7(P).TTC") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "contextFont2";
+  src: url("src/assets/fonts/華康方圓體W7_W7(P).TTC") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  list-style: none;
+}
+
+.wrap {
+  min-height: calc(100%-50px);
+}
+
+.container {
+  width: 1000px;
+  margin: auto;
+}
+
+.nav-bar {
+  height: 50px;
+  background-color: #31525b;
+  color: #B3DEE5;
+}
+
+.nav-bar ul {
+  display: flex;
+  font-size: 0;
+  justify-content: flex-end;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  padding-top: 10px;
+  height: 30px;
+}
+
+.nav-bar ul li{
+  display: inline-block;
+  padding-right: 2%;
+}
+
+.nav-bar a {
+  color: inherit; /*移除超連結顏色*/
+  font-family: contextFont;
+  font-size: 20px;
+  text-decoration: none; /*移除超連結底線*/
+}
+
+.nav-bar a:hover {
+  background-color: rgb(252, 255, 192);
+  color: rgb(198, 56, 56);
+  /* text-decoration: solid rgb(4, 4, 96) */
+}
+
+.div-search-bar {
+  /* background-color: rgb(34, 152, 112); */
+  background-image: url('src/assets/images/台南風景.png');
+  background-size: 100% 70%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.8;
+  height: 400px;
+  width: 100%;
+  position: relative;
+}
+
+.bar-img {
+  /* max-height: 100%; */
+  /* max-width: 100%; */
+  /* height: 400px;
+  width: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  float: left; */
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+
+}
+
+.search {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  margin-left: 20%;
+  margin-right: 20%;
+
+}
+
+.search input {
+  font-size: 20px;
+}
+
+.search button {
+  width: 80px;
+}
+
+.title {
+  /* display: flex;
+  flex-wrap: wrap; */
+  font-family: topicFont;
+  font-size: 60px;
+  color: #022151;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.form-control {
+  opacity: 0.8;
+}
+
+.attractions {
+  /* background-color: rgb(172, 233, 241); */
+  height: auto;
+  border: 3px;
+  border-color: black;
+  border-style: solid;
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.select {
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
+  /* justify-content: space-between; */
+  font-family: contextFont;
+  margin: 5px;
+  color: #022151;
+}
+
+select option:hover, option:checked{ /*???*/
+  background-color: #BACEC1;
+}
+
+.select label {
+  font-size: 22px;
+  margin-top: 5px;
+  vertical-align: middle;
+}
+
+.form-select {
+  font-size: 18px;
+  margin-right: 5%;
+  color: #022151;
+  background-color: #E7ECEF;
+}
+
+
+.select button {
+  margin-left: -4%;
+  font-size: 20px;
+}
+.select-county, .select-district{
+  /* display: flex;
+  flex-wrap: wrap; */
+}
+
+.card{
+  font-family: contextFont2;
+  width: 400px;
+  height: 300px;
+  /* border: 1px solid gray; */
+  margin-top: 5%;
+  margin-bottom: 5%;
+  padding: 5px;
+  box-sizing: border-box;
+  /* background: rgba(217, 217, 217, 0.58); */
+  border: 1px solid white;
+  /* box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22); */
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.22);
+  /* backdrop-filter: blur(4px); */
+  border-radius: 5px;
+  /* text-align: center; */
+  cursor: pointer;
+  transition: all 0.5s;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  user-select: none; /* 不可全部選取文字 */
+  /* font-weight: bolder; */
+  color: black;
+  padding: 10px;
+}
+
+.card:hover {
+  border: 3px solid rgb(13, 125, 62);
+  transform: scale(1.05);
+}
+
+.card:active {
+  transform: scale(0.95) rotateZ(1.7deg);
+}
+
+.card img {
+  display:block;
+  margin:auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.see-more :hover{
+  color: red;
+}
+
+.pages {
+  position: relative;
+  right: 30%;
+  left: 30%;
+  font-family: contextFont;
+  font-size: 18px;
+}
+
+.my-pagination ::ng-deep .ngx-pagination .current {
+  background-color: #BACEC1;
+}
+
+::ng-deep ul li:not(.active) a {
+  border: 0;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+::ng-deep ul li:not(.active) a:hover {
+  background-color: #ffffbb;
+}
+
+footer {
+  height: 50px;
+  text-align: center;
+  background-color: #31525b;
+  color: #B3DEE5;
+  font-family: contextFont;
+  font-size: 20px;
+  padding: 3px;
+}
+
+footer p {
+  padding-top: 8px;
+}

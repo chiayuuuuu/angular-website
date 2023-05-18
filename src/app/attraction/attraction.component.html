@@ -1,1 +1,126 @@
-<p>attraction works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div>
+          <nav class="nav-bar">
+            <ul>
+              <li>
+                <a href="/home"><i class="fas fa-home"></i>首頁</a>
+              </li>
+              <li>
+                <a href="/login"><i class="fa-solid fa-right-from-bracket"></i>登出</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <!-- 搜尋Bar -->
+        <div class="div-search-bar">
+          <!-- <img class="bar-img" [src]="barPath" alt="101" /> -->
+          <div class="content">
+            <p class="title">台南景點推薦<i class="fa-regular fa-thumbs-up" style="color: #022151"></i></p>
+            <div class="search">
+              <div class="input-group mb-3 mb-2">
+                <input class="form-control" type="text" name="sreach-bar" id="sreach-bar" placeholder="搜尋地點..." [(ngModel)]="keyword" (keyup.enter)="onSearchAttraction(keyword)" [value]="keyword"/>
+                <button class="btn btn-dark" (click)="onSearchAttraction(keyword)"><i class="fa-solid fa-magnifying-glass"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="container">
+        <!-- <form #postForm="ngForm" (submit)="postForm.value"> -->
+        <div class="select">
+          <!-- <div class="select-county"> -->
+            <!-- <label for="county">地區： </label>
+            <select
+              class="form-select w-25"
+              name="county"
+              id="county"
+              [(ngModel)]="selectedCounty"
+              (change)="getAllDistrict()"
+              required
+            >
+              <option value="">---請選擇地區---</option>
+              <option *ngFor="let api of apiList" [value]="api.county" >
+                {{ api.county }}
+              </option>
+            </select> -->
+          <!-- </div> -->
+          <!-- <div class="select-district"> -->
+            <label for="district">區域： </label>
+            <select class="form-select w-25" name="district" id="district" [(ngModel)]="selectedDistrict">
+              <option value="">---請選擇區域---</option>
+              <option
+                *ngFor="let district of districtList"
+                [value]="district.district"
+              >
+                {{ district.district }}
+              </option>
+            </select>
+          <!-- </div> -->
+          <button
+            type="submit"
+            class="btn btn-outline-secondary"
+            (click)="getAllAttraction()"
+          >
+          <i class="fa-solid fa-magnifying-glass"></i>
+          查詢
+          </button>
+        </div>
+        <ngx-spinner
+          bdColor="rgba(0,0,0,0.5)"
+          size="medium"
+          color="#ffffbb"
+          type="pacman"
+          [fullScreen]="true"
+          ><p style="color: white">Loading...</p>
+        </ngx-spinner>
+        <div>
+          <ul class="attractions">
+            <li
+              *ngFor="let attraction of selectedAttractionList | paginate : {itemsPerPage: itemsPerPage, currentPage: currentPage}"
+              class="info-list"
+            >
+              <div class="card" (click)="onGoShowComponent(attraction.id)">
+                <img
+                  [src]="viewPath"
+                  alt="景點"
+                  width="100px"
+                  height="100px"
+                />
+                <p>景點名稱: {{ attraction.name }}</p>
+                <p>地址: {{ attraction.address }}</p>
+                <p>連絡電話: {{ attraction.telephone }}</p>
+                <div class="see-more">
+                  <a (click)="onGoShowComponent(attraction.id)">查看更多</a>
+                </div>
+                <!-- <p>縣市: {{ attraction.county }}</p> -->
+                <!-- <p>區域: {{ attraction.district }}</p> -->
+                <!-- <p>開放時間: {{ attraction.openTime }}</p> -->
+                <!-- <p>景點介紹: {{ (attraction.info!='')?attraction.info.substring(0,10):attraction.info }}</p> -->
+                <!-- <p>景點描述: {{ (attraction.description!='')?attraction.description.substring(0,10):attraction.description }}      </p> -->
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="pages">
+          <pagination-controls class="my-pagination" [previousLabel]="prev" [nextLabel]="next" (pageChange)="currentPage = $event"></pagination-controls>
+        </div>
+        <!-- </form> -->
+      </div>
+    </div>
+    <footer>
+      <p>本網站為練習用</p>
+    </footer>
+  </body>
+</html>

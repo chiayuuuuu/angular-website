@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="detail-info">
+        <img src="assets/images/台南.png" alt="景點" class="info-img" />
+        <h1 class="viewName">{{ selectedAttraction.name }}</h1>
+        <ul class="info-list">
+          <li>
+            地址:
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ selectedAttraction.address }}</p>
+          </li>
+
+          <li>
+            連絡電話:
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ selectedAttraction.telephone }}</p>
+          </li>
+
+          <li>
+            開放時間:
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;{{ selectedAttraction.openTime }}</p>
+          </li>
+
+          <li>
+            景點介紹:
+            <p class="information">
+              &nbsp;&nbsp;&nbsp;&nbsp;{{ selectedAttraction.info }}
+            </p>
+          </li>
+
+          <li>
+            景點描述:
+            <p class="information">
+              &nbsp;&nbsp;&nbsp;&nbsp;{{ selectedAttraction.description }}
+            </p>
+          </li>
+        </ul>
+        <div class="back">
+          <button class="btn btn-outline-secondary" (click)="goBack()">
+            回首頁<i class="fas fa-home"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
