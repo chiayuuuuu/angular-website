@@ -6,13 +6,15 @@ import { BackgroundSystemComponent } from './background-system/background-system
 import { LoginComponent } from './login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { ShowComponent } from './show/show.component';
+import { PreviewComponent } from './preview/preview.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'home', component: AttractionComponent },
-  { path: 'admin', component: BackgroundSystemComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'attraction', component: ShowComponent },
+  { path: 'admin', component: BackgroundSystemComponent },
+  { path: 'preview', component: PreviewComponent },
   { path: '**', component: NotfoundComponent },
 ];
 

@@ -6,10 +6,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Location } from '@angular/common';
 @Component({
   selector: 'app-show',
-  templateUrl: './show.component.html',
-  styleUrls: ['./show.component.css'],
+  templateUrl: './preview.component.html',
+  styleUrls: ['./preview.component.css'],
 })
-export class ShowComponent implements OnInit {
+export class PreviewComponent implements OnInit {
   id!: string | null;
   selectedDistrict!: string | null;
   selectedAttraction!: Attraction;
@@ -32,7 +32,7 @@ export class ShowComponent implements OnInit {
   }
 
   getAttractionById() {
-    this.spinner.show();
+    // this.spinner.show();
     const url = 'http://localhost:8080/api/attraction/' + this.id;
     this.http.get<Attraction>(url).subscribe(
       (data) => {
@@ -54,7 +54,6 @@ export class ShowComponent implements OnInit {
         district: this.selectedDistrict,
       },
     };
-    console.log('show dist=', this.selectedDistrict);
-    this.router.navigate(['/home'], option);
+    this.router.navigate(['/admin'], option);
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Attraction } from '../@models/attraction.model';
 import { NgForm } from '@angular/forms';
@@ -41,7 +41,7 @@ export class BackgroundSystemComponent implements OnInit {
   districtList: District[] = [];
   isLoading = false;
   selectedCounty = '';
-  selectedDistrict = '';
+  selectedDistrict='';
   selectedAPI!: PublicAPI;
   isClickAddAPI = false;
   isClickAdd = false;
@@ -53,15 +53,30 @@ export class BackgroundSystemComponent implements OnInit {
   addCounty = '';
   addDistrict = '';
   selectedAttraction!: Attraction;
-  selectedApi!:PublicAPI;
+  selectedApi!: PublicAPI;
+  dist:any
   constructor(
     private http: HttpClient,
     private spinner: NgxSpinnerService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.dist = this.router.getCurrentNavigation();
+  }
   ngOnInit(): void {
+    console.log('dist=', this.dist);
+    const state = this.dist.extras.state;
+    // console.log('n=',this.dist.extras.state)
+    if (state != undefined) {
+      this.selectedDistrict = state['district'].toString();
+      this.spinner.show();
+      this.getAllAttraction();
+      // console.log('dist=', this.dist);
+      // console.log('now dist=', this.selectedDistrict);
+    } else {
+      this.selectedDistrict = '';
+    }
     this.getAllAPIInfo();
-    // this.getAllDistrict();
     this.isClickShowAllApi = false;
     this.getAllDistrict();
     this.spinner.show();
@@ -69,7 +84,7 @@ export class BackgroundSystemComponent implements OnInit {
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
-    }, 5000);
+    }, 2000);
   }
 
   getAllAPI() {
@@ -110,7 +125,7 @@ export class BackgroundSystemComponent implements OnInit {
     while (this.districtList.length) {
       this.districtList.pop();
     }
-    this.selectedCounty='臺南市'
+    this.selectedCounty = '臺南市';
     console.log('county=', this.selectedCounty);
     this.getCountyEng();
     console.log('countyEng=', this.countyEng);
@@ -164,37 +179,6 @@ export class BackgroundSystemComponent implements OnInit {
         );
         this.spinner.hide();
         // this.isLoading = false;
-      },
-      (error) => {
-        console.error('oops');
-        console.error(error);
-      }
-    );
-  }
-
-  getAttraction(e: any) {
-    console.log('e=', e.target.value);
-    this.spinner.show();
-    this.isLoading = true;
-    this.selectedDistrict = e.target.value;
-    // console.log("this.selectedDistrict=",this.selectedDistrict);
-    //清空陣列
-    while (this.attractionAllList.length) {
-      this.attractionAllList.pop();
-    }
-    const url = 'http://localhost:8080/api/attraction/all';
-    this.http.get<Attraction[]>(url).subscribe(
-      (data) => {
-        this.attractionList = data;
-        console.log(this.attractionList);
-        for (let attraction of this.attractionList) {
-          if (attraction.district == this.selectedDistrict) {
-            this.attractionAllList.push(attraction);
-          }
-        }
-        this.spinner.hide();
-        this.isLoading = false;
-        this.selectedDistrict = '';
       },
       (error) => {
         console.error('oops');
@@ -261,13 +245,13 @@ export class BackgroundSystemComponent implements OnInit {
     const url = 'http://localhost:8080/publicApi';
     this.http.post(url, postData).subscribe((d) => {
       console.log('修改成功, 結果是:', d);
-      alert('修改成功')
+      alert('修改成功');
       this.isClickModifyApi = false;
     });
   }
   removeAPI(id: number) {
     let ans = confirm('確定要刪除嗎?');
-    if(ans){
+    if (ans) {
       const url = 'http://localhost:8080/publicApi/' + id.toString();
       this.http.delete(url).subscribe(() => {
         console.log(
@@ -304,20 +288,21 @@ export class BackgroundSystemComponent implements OnInit {
     const url = 'http://localhost:8080/api/attraction';
     this.http.post(url, postData).subscribe((d) => {
       console.log('修改成功, 結果是:', d);
-      alert('修改成功')
+      alert('修改成功');
     });
   }
 
   removeAttraction(id: number) {
     let ans = confirm('確定要刪除嗎?');
-    if(ans){
+    if (ans) {
       const url = 'http://localhost:8080/api/attraction/' + id.toString();
       this.http.delete(url).subscribe(() => {
         console.log(
           '刪除成功, 刪的是:',
           // this.attractionAllList.filter((attraction) => attraction.id == id)
-          this.selectedAttractionList.filter((attraction) => attraction.id == id)
-
+          this.selectedAttractionList.filter(
+            (attraction) => attraction.id == id
+          )
         );
         this.selectedAttractionList = this.selectedAttractionList.filter(
           (attraction) => attraction.id !== id
@@ -326,15 +311,14 @@ export class BackgroundSystemComponent implements OnInit {
     }
   }
 
-  onGoShowComponent(id: number) {
+  onGoPreviewComponent(id: number) {
     const option: NavigationExtras = {
       queryParams: {
-        county: this.selectedCounty,
         district: this.selectedDistrict,
         id: id,
       },
     };
-    this.router.navigate(['../attraction'], option);
+    this.router.navigate(['/preview'], option);
   }
 
   calculateTotalPages(totalItems: number, itemsPerPage: number): number {

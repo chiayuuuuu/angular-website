@@ -84,15 +84,15 @@
                 class="btn btn-outline-secondary"
                 (click)="getAllAPIInfo()"
               >
-                顯示所有API
+                顯示API
               </button>
-              <button
+              <!-- <button
                 type="submit"
                 class="btn btn-outline-secondary"
                 (click)="showAddAPIInfo()"
               >
                 新增景點API
-              </button>
+              </button> -->
             </div>
           </div>
           <ngx-spinner
@@ -149,14 +149,28 @@
                 [(ngModel)]="selectedCounty"
               />
               <label for="district">區域:</label>
-              <input
+              <select
+              class="form-select"
+              name="district"
+              id="district"
+              [(ngModel)]="selectedDistrict"
+            >
+              <option value="">---請選擇區域---</option>
+              <option
+                *ngFor="let district of districtList"
+                [value]="district.district"
+              >
+                {{ district.district }}
+              </option>
+            </select>
+              <!-- <input
                 type="text"
                 name="district"
                 required
                 ngModel
                 class="form-control"
                 [(ngModel)]="selectedDistrict"
-              />
+              /> -->
               <label for="name">景點名稱:</label>
               <input
                 type="text"
@@ -286,13 +300,27 @@
                 class="form-control"
               />
               <label for="district">區域:</label>
-              <input
+              <!-- <input
                 type="text"
                 name="district"
                 required
                 [(ngModel)]="selectedAttraction.district"
                 class="form-control"
-              />
+              /> -->
+              <select
+              class="form-select"
+              name="district"
+              id="district"
+              [(ngModel)]="selectedDistrict"
+            >
+              <option value="">---請選擇區域---</option>
+              <option
+                *ngFor="let district of districtList"
+                [value]="district.district"
+              >
+                {{ district.district }}
+              </option>
+            </select>
               <label for="name">景點名稱:</label>
               <input
                 type="text"
@@ -394,7 +422,7 @@
                     <p>景點名稱: {{ attraction.name }}</p>
                     <div class="edit-btns">
                       <!-- 預覽按鈕 -->
-                      <a (click)="onGoShowComponent(attraction.id)"
+                      <a (click)="onGoPreviewComponent(attraction.id)"
                         ><i class="fa-solid fa-eye"></i
                       ></a>
                       <!-- 編輯按鈕 -->

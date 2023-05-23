@@ -1,0 +1,74 @@
+@font-face {
+  font-family: "topicFont";
+  src: url("src/assets/fonts/華康墨字體_(P).TTC") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "contextFont";
+  src: url("src/assets/fonts/華康POP1體W7_W7(P).TTC") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "contextFont2";
+  src: url("src/assets/fonts/華康方圓體W7_W7(P).TTC") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.wrap {
+}
+
+* {
+  list-style: none;
+}
+
+.detail-info {
+  width: 1000px;
+  border: 3px double rgb(11, 5, 86);
+  margin: auto;
+  padding: 2%;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back button {
+  font-family: contextFont;
+  font-size: 20px;
+}
+
+.info-img {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  width: 300px;
+}
+
+.info-list {
+}
+
+.viewName {
+  font-family: topicFont;
+  font-size: 48px;
+}
+
+.info-list li {
+  font-family: contextFont;
+  font-size: 24px;
+}
+
+.info-list p {
+  font-family: contextFont2;
+  font-size: 20px;
+  background: #f9f3a6;
+  padding: 5px 20px;
+}
+
+.information {
+  text-align: justify;
+}

@@ -1,8 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras, Route, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationExtras,
+  Route,
+  Router,
+} from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Attraction } from '../@models/attraction.model';
+import { Location } from '@angular/common';
 
 interface PublicAPI {
   id: number;
@@ -45,13 +51,28 @@ export class AttractionComponent implements OnInit {
   selectedCounty = '';
   countyEng = '';
   keyword = '';
+  dist: any;
   constructor(
     private http: HttpClient,
     private spinner: NgxSpinnerService,
     private router: Router
-  ) {}
+  ) {
+    this.dist = this.router.getCurrentNavigation();
+  }
   ngOnInit(): void {
-    // this.getAllAPI();
+    console.log('dist=', this.dist);
+    const state = this.dist.extras.state;
+    // console.log('n=',this.dist.extras.state)
+    if (state != undefined) {
+      this.selectedDistrict = state['district'].toString();
+      this.spinner.show();
+      this.getAllAttraction();
+      // console.log('dist=', this.dist);
+      // console.log('now dist=', this.selectedDistrict);
+    } else {
+      this.selectedDistrict = '';
+    }
+
     this.getAllAPICounty();
     this.getAllDistrict();
     this.spinner.show();
@@ -161,7 +182,7 @@ export class AttractionComponent implements OnInit {
   getAllAttraction() {
     this.spinner.show();
     // this.isLoading = true;
-    const url = `http://localhost:8080/api/attraction/all/${this.countyEng}`;
+    const url = `http://localhost:8080/api/attraction/all/`;
     //清空陣列
     while (this.selectedAttractionList.length) {
       this.selectedAttractionList.pop();
@@ -191,45 +212,14 @@ export class AttractionComponent implements OnInit {
     );
   }
 
-  // getAttraction(e: any) {
-  //   console.log('e=', e.target.value);
-  //   this.spinner.show();
-  //   this.isLoading = true;
-  //   this.selectedDistrict = e.target.value;
-  //   console.log('this.selectedDistrict=', this.selectedDistrict);
-  //   //清空陣列
-  //   while (this.attractionAllList.length) {
-  //     this.attractionAllList.pop();
-  //   }
-  //   const url = 'http://localhost:8080/api/attraction/all';
-  //   this.http.get<Attraction[]>(url).subscribe(
-  //     (data) => {
-  //       this.attractionList = data;
-  //       for (let attraction of this.attractionList) {
-  //         if (attraction.district == this.selectedDistrict) {
-  //           this.attractionAllList.push(attraction);
-  //         }
-  //       }
-  //       this.spinner.hide();
-  //       this.isLoading = false;
-  //       this.selectedDistrict = '';
-  //     },
-  //     (error) => {
-  //       console.error('oops');
-  //       console.error(error);
-  //     }
-  //   );
-  // }
-
   onGoShowComponent(id: number) {
     const option: NavigationExtras = {
       queryParams: {
-        county: this.selectedCounty,
         district: this.selectedDistrict,
         id: id,
       },
     };
-    this.router.navigate(['../attraction'], option);
+    this.router.navigate(['/attraction'], option);
   }
 
   calculateTotalPages(totalItems: number, itemsPerPage: number): number {

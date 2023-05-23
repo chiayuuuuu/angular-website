@@ -14,6 +14,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth.service';
+import { PreviewComponent } from './preview/preview.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthService } from './auth.service';
     BackgroundSystemComponent,
     NotfoundComponent,
     ShowComponent,
-    LoginComponent
+    LoginComponent,
+    PreviewComponent
   ],
   imports: [
     BrowserModule,
