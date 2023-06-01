@@ -11,17 +11,17 @@
       <p class="title">台南景點推薦系統</p>
       <div class="card">
         <a class="login">WELCOME</a>
-        <!-- <form #PostForm="ngForm" (submit)="onLogin(PostForm.value)"> -->
+        <form #PostForm="ngForm" (submit)="onLogin(PostForm.value)">
         <div class="inputBox">
-          <input type="text" required [(ngModel)]="userid" />
+          <input type="text" required [(ngModel)]="userid" name="uid"/>
           <span class="user">帳號</span>
         </div>
         <div class="inputBox">
-          <input type="password" required [(ngModel)]="userpwd" />
+          <input type="password" required [(ngModel)]="userpwd" name="password"/>
           <span>密碼</span>
         </div>
-        <button class="enter" (click)="onLogin()">登入</button>
-        <!-- </form> -->
+        <button class="enter">登入</button>
+        </form>
       </div>
     </div>
     <footer></footer>

@@ -150,19 +150,19 @@
               />
               <label for="district">區域:</label>
               <select
-              class="form-select"
-              name="district"
-              id="district"
-              [(ngModel)]="selectedDistrict"
-            >
-              <option value="">---請選擇區域---</option>
-              <option
-                *ngFor="let district of districtList"
-                [value]="district.district"
+                class="form-select"
+                name="district"
+                id="district"
+                [(ngModel)]="selectedDistrict"
               >
-                {{ district.district }}
-              </option>
-            </select>
+                <option value="">---請選擇區域---</option>
+                <option
+                  *ngFor="let district of districtList"
+                  [value]="district.district"
+                >
+                  {{ district.district }}
+                </option>
+              </select>
               <!-- <input
                 type="text"
                 name="district"
@@ -239,13 +239,14 @@
               #ModifyAPIForm="ngForm"
               (submit)="modifyAPI(ModifyAPIForm.value)"
             >
-              <label for="id">ID:</label>
+              <!-- <label for="id">ID:</label> -->
               <input
                 type="number"
                 name="id"
                 required
                 [(ngModel)]="selectedApi.id"
                 class="form-control"
+                hidden
               />
               <label for="county">縣市:</label>
               <input
@@ -308,19 +309,19 @@
                 class="form-control"
               /> -->
               <select
-              class="form-select"
-              name="district"
-              id="district"
-              [(ngModel)]="selectedDistrict"
-            >
-              <option value="">---請選擇區域---</option>
-              <option
-                *ngFor="let district of districtList"
-                [value]="district.district"
+                class="form-select"
+                name="district"
+                id="district"
+                [(ngModel)]="selectedDistrict"
               >
-                {{ district.district }}
-              </option>
-            </select>
+                <option value="">---請選擇區域---</option>
+                <option
+                  *ngFor="let district of districtList"
+                  [value]="district.district"
+                >
+                  {{ district.district }}
+                </option>
+              </select>
               <label for="name">景點名稱:</label>
               <input
                 type="text"

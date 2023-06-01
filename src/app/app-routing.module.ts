@@ -13,8 +13,18 @@ const routes: Routes = [
   { path: 'home', component: AttractionComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'attraction', component: ShowComponent },
-  { path: 'admin', component: BackgroundSystemComponent },
-  { path: 'preview', component: PreviewComponent },
+  {
+    path: 'admin',
+    component: BackgroundSystemComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'preview',
+        component: PreviewComponent,
+        canActivateChild: [AuthGuard],
+      },
+    ],
+  },
   { path: '**', component: NotfoundComponent },
 ];
 
